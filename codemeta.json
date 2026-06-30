@@ -1,0 +1,29 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "author": [
+    {
+      "@id": "https://orcid.org/0000-0001-6232-9096",
+      "@type": "Person",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "Active Inference Institute"
+      },
+      "familyName": "Friedman",
+      "givenName": "Daniel Ari"
+    }
+  ],
+  "codeRepository": "https://github.com/docxology/template_eda_notebook",
+  "dateModified": "2026-06-29",
+  "keywords": [
+    "exploratory data analysis",
+    "computational notebook",
+    "reproducible research",
+    "pandas",
+    "data cleaning",
+    "correlation analysis"
+  ],
+  "license": "https://spdx.org/licenses/MIT",
+  "name": "Exploratory Data Analysis: A Reproducible Notebook Template",
+  "version": "1.0.0"
+}
