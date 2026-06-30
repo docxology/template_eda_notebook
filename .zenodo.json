@@ -16,6 +16,13 @@
     "correlation analysis"
   ],
   "license": "MIT",
+  "related_identifiers": [
+    {
+      "identifier": "10.5281/zenodo.21086292",
+      "relation": "isVersionOf",
+      "scheme": "doi"
+    }
+  ],
   "title": "Exploratory Data Analysis: A Reproducible Notebook Template",
   "upload_type": "software",
   "version": "1.0.0"
