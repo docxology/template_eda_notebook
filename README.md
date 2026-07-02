@@ -4,7 +4,7 @@ A computational-notebook exemplar: an interactive walkthrough notebook
 ([`notebooks/eda_walkthrough.ipynb`](notebooks/eda_walkthrough.ipynb)) that
 imports a small, fully-tested EDA library instead of carrying logic in its
 cells. Exemplar roster:
-[`projects/AGENTS.md`](../../AGENTS.md#permanent-canonical-exemplars-and-optional-search-add-on).
+[`projects/AGENTS.md`](../../AGENTS.md#permanent-canonical-exemplars).
 
 ## When to use this template
 
@@ -52,6 +52,14 @@ _Keywords: exploratory data analysis, computational notebook, reproducible resea
 
 _Status legend: ✅ published (durable identifier recorded in `config.yaml`) · ⚪ available (adapter implemented and locally verifiable) · 🟡 planned. This block is generated — edit `manuscript/config.yaml`, then regenerate with `uv run python -m infrastructure.publishing.status_report --project <path> --write`._
 <!-- PUBLISHING-STATUS:END -->
+
+The 3 platforms still shown ⚪ available are not automatable to "published" with
+current tooling/credentials, not an oversight: **arXiv** has no submission API
+in this codebase (`infrastructure.publishing.arxiv` only prepares a local
+tarball — a human must upload it via arxiv.org and the resulting `arxiv` URL
+would then be added to `publication.published_artifacts`); **Cloudflare
+Pages** needs a `CLOUDFLARE_ACCOUNT_ID` the configured API token cannot
+auto-discover; **IPFS (Web3.Storage)** has no `WEB3_STORAGE_TOKEN` configured.
 
 - Canonical renderer: [docxology/template](https://github.com/docxology/template) with `--project templates/template_eda_notebook`
 - Tracked outputs: [`output/`](output/) in this project and `output/templates/template_eda_notebook/` in the monorepo; public output files above 50 MB stay out of git.
