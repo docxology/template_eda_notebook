@@ -23,7 +23,7 @@ general feature ideas.
 ## Configurable-surface gaps
 
 - Keep `manuscript/config.yaml.example` as the copy-and-customize template with
-  the same top-level sections as `config.yaml`, including the `dataset` block.
+  the same top-level sections as `config.yaml`, including the `project_config.dataset` block.
 - Add any future EDA parameters (e.g. correlation method, imputation strategy)
   under typed source loaders rather than reading ad hoc YAML from scripts.
 
@@ -41,6 +41,10 @@ general feature ideas.
 - Add an exact-value assertion whenever a new figure-data preparer or statistic
   is introduced.
 - Keep the notebook-binding test in sync as the public `src` surface grows.
+- Add a real generator script (e.g. `scripts/generate_measurements_data.py`)
+  with a fixed NumPy seed that reproduces `data/measurements.csv` exactly, plus
+  a test binding the script's output to the shipped CSV, to strengthen the
+  dataset's reproducibility story beyond a static fixture.
 
 ## Ordered improvement ladder
 
