@@ -24,10 +24,11 @@ uv run pytest projects/working/my_eda_project/tests \
 uv run python projects/working/my_eda_project/scripts/eda_analysis.py
 ```
 
-**⚠️ Confidentiality invariant.** The repo `.gitignore` is configured so that
-only the public canonical exemplars under `projects/templates/` are ever
-git-tracked. Your fork (`projects/working/my_eda_project/`) is local-only and
-won't be pushed even if you `git add -f` it. Read
+**⚠️ Confidentiality invariant.** In the template monorepo checkout, the repo
+`.gitignore` is configured so that only the public canonical exemplars under
+`projects/templates/` are ever git-tracked. Your fork
+(`projects/working/my_eda_project/`) is local-only and won't be pushed even if
+you `git add -f` it. Read
 [`CLAUDE.md`](https://github.com/docxology/template/blob/main/CLAUDE.md) "CONFIDENTIALITY INVARIANT" for
 the full fence.
 
