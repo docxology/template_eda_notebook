@@ -1,7 +1,7 @@
 # Manuscript Syntax Reference (template_eda_notebook)
 
 Project-specific overlay on the canonical
-[`docs/guides/manuscript-semantics.md`](../../../../docs/guides/manuscript-semantics.md)
+[`docs/guides/manuscript-semantics.md`](https://github.com/docxology/template/blob/main/docs/guides/manuscript-semantics.md)
 — read that file first; this file documents the **template_eda_notebook**
 figure, table, and section registries.
 
@@ -102,6 +102,6 @@ first; `99_` renders references last.
 
 ## See Also
 
-- [`../../../docs/guides/manuscript-semantics.md`](../../../../docs/guides/manuscript-semantics.md) — Repository-wide canonical semantics.
+- [`docs/guides/manuscript-semantics.md`](https://github.com/docxology/template/blob/main/docs/guides/manuscript-semantics.md) — Repository-wide canonical semantics.
 - [`AGENTS.md`](AGENTS.md) — Figure protocol and section-modification workflow.
 - [`../docs/rendering_pipeline.md`](../docs/rendering_pipeline.md) — Full rendering flow.

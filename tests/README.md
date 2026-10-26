@@ -31,7 +31,7 @@ uv run pytest tests/ --cov=src --cov-fail-under=90
 | `test_generate_measurements_data.py` | deterministic generator + script binding to the shipped fixture contract |
 | `test_notebook.py` | notebook nbformat + src-binding + no-logic-in-cells |
 
-Live test count and coverage: [`docs/_generated/COUNTS.md`](../../../../docs/_generated/COUNTS.md).
+Live test count and coverage: [`docs/_generated/COUNTS.md`](https://github.com/docxology/template/blob/main/docs/_generated/COUNTS.md).
 
 ## Architecture
 

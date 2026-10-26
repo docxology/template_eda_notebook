@@ -98,7 +98,7 @@ uv run pytest projects/templates/template_eda_notebook/tests \
 ```
 
 `pyproject.toml` enforces `fail_under = 90` as the CI gate. Live achieved
-coverage is tracked in [`docs/_generated/COUNTS.md`](../../../../docs/_generated/COUNTS.md).
+coverage is tracked in [`docs/_generated/COUNTS.md`](https://github.com/docxology/template/blob/main/docs/_generated/COUNTS.md).
 Do not delete tests to make a number work — fix the gap.
 
 ## Determinism

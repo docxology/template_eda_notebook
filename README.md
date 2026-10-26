@@ -4,7 +4,15 @@ A computational-notebook exemplar: an interactive walkthrough notebook
 ([`notebooks/eda_walkthrough.ipynb`](notebooks/eda_walkthrough.ipynb)) that
 imports a small, fully-tested EDA library instead of carrying logic in its
 cells. Exemplar roster:
-[`projects/AGENTS.md`](../../AGENTS.md#permanent-canonical-exemplars).
+[`projects/AGENTS.md`](https://github.com/docxology/template/blob/main/projects/AGENTS.md#permanent-canonical-exemplars).
+
+> **Standalone mirror.** This repository is published from
+> `projects/templates/template_eda_notebook/` in the
+> [template monorepo](https://github.com/docxology/template). Commands and paths
+> below that mention `projects/templates/...`, `scripts/pipeline/*`, or
+> `scripts/audit/*` run from a monorepo checkout, not from this repo. `src/` is
+> infrastructure-free; `scripts/eda_analysis.py` imports the monorepo's
+> `infrastructure` package.
 
 ## When to use this template
 
@@ -16,9 +24,12 @@ workflow: explore fast in a notebook cell, then move any computation that
 matters into `src/eda/` behind a failing test (thin-orchestrator pattern;
 `src/` implements, scripts and cells coordinate, tests enforce ≥90% coverage
 with no mocks). If your project is primarily prose, layout, or numerical
-optimization, see [`template_prose_project`](../template_prose_project/),
-[`template_newspaper`](../template_newspaper/), or
-[`template_code_project`](../template_code_project/) instead.
+optimization, see
+[`template_prose_project`](https://github.com/docxology/template/tree/main/projects/templates/template_prose_project),
+[`template_newspaper`](https://github.com/docxology/template/tree/main/projects/templates/template_newspaper),
+or
+[`template_code_project`](https://github.com/docxology/template/tree/main/projects/templates/template_code_project)
+instead.
 
 ## Publication and rendering
 
@@ -72,17 +83,6 @@ auto-discover; **IPFS (Web3.Storage)** has no `WEB3_STORAGE_TOKEN` configured.
 - Canonical renderer: [docxology/template](https://github.com/docxology/template) with `--project templates/template_eda_notebook`
 - Tracked outputs: [`output/`](output/) in this project and `output/templates/template_eda_notebook/` in the monorepo; public output files above 50 MB stay out of git.
 
-To regenerate this exemplar from the public monorepo:
-
-```bash
-git clone https://github.com/docxology/template
-cd template
-uv sync
-./run.sh --project templates/template_eda_notebook --pipeline --core-only
-uv run python scripts/pipeline/stage_04_validate.py --project templates/template_eda_notebook
-uv run python scripts/pipeline/stage_05_copy.py --project templates/template_eda_notebook
-```
-
 ## Quick Start — run via the template monorepo
 
 ```bash
@@ -103,7 +103,7 @@ To regenerate this exemplar from the public monorepo:
 git clone https://github.com/docxology/template
 cd template
 uv sync
-uv run python scripts/runner/execute_pipeline.py --project templates/template_eda_notebook --core-only
+uv run python scripts/runner/execute_pipeline.py --project templates/template_eda_notebook --mode core
 uv run python scripts/pipeline/stage_04_validate.py --project templates/template_eda_notebook
 uv run python scripts/pipeline/stage_05_copy.py --project templates/template_eda_notebook
 ```

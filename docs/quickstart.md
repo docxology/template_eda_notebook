@@ -5,7 +5,7 @@ Get up and running with the `template_eda_notebook` exemplar in 5 minutes.
 ## Prerequisites
 
 - Python 3.10 or higher
-- [`uv`](https://github.com/astral-sh/uv) package manager (repo invariant — see the root `CLAUDE.md`)
+- [`uv`](https://github.com/astral-sh/uv) package manager (repo invariant — see the monorepo [`CLAUDE.md`](https://github.com/docxology/template/blob/main/CLAUDE.md))
 - Git
 
 ## Setup (One-Time)
@@ -32,7 +32,7 @@ uv run pytest projects/templates/template_eda_notebook/tests -v --tb=short
 ```
 
 Expected: passing tests and coverage above the 90% gate. Live collection counts
-are tracked in [`../../../docs/_generated/COUNTS.md`](../../../../docs/_generated/COUNTS.md).
+are tracked in [`docs/_generated/COUNTS.md`](https://github.com/docxology/template/blob/main/docs/_generated/COUNTS.md).
 
 ## Execute the Analysis Pipeline
 

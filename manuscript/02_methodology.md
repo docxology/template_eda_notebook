@@ -69,7 +69,7 @@ The project is governed by a strict zero-mock policy, evaluated by running
    and that no cell defines its own `def`/`class`.
 4. **Coverage gate**: CI enforces a ≥90% statement-coverage gate on
    `projects/templates/template_eda_notebook/src/`; the live figure is tracked in
-   [`docs/_generated/COUNTS.md`](../../../../docs/_generated/COUNTS.md).
+   [`docs/_generated/COUNTS.md`](https://github.com/docxology/template/blob/main/docs/_generated/COUNTS.md).
 
 ## Figure generation contract
 

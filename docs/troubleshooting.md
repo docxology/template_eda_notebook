@@ -18,7 +18,7 @@ uv run python scripts/pipeline/stage_03_render.py --project templates/template_e
 Or re-run the full pipeline:
 
 ```bash
-uv run python scripts/runner/execute_pipeline.py --project templates/template_eda_notebook --core-only
+uv run python scripts/runner/execute_pipeline.py --project templates/template_eda_notebook --mode core
 ```
 
 ## `FileNotFoundError: dataset CSV not found`
@@ -66,11 +66,11 @@ first `import matplotlib.pyplot`, and run with `uv run` from the repository root
 
 ## `uv` command not found
 
-**Fix.** Install `uv` via the canonical installer (the repo invariant — see root
-`CLAUDE.md` — is `uv`-only; never bootstrap `uv` through `pip`):
+**Fix.** Install `uv` via the canonical installer (the repo invariant — see the
+monorepo [`CLAUDE.md`](https://github.com/docxology/template/blob/main/CLAUDE.md) — is `uv`-only; never bootstrap `uv` through `pip`):
 
 ```bash
-Follow the [checksum-verified uv installation instructions](../../../../docs/operational/build/dependency-management.md#installing-uv),
+Follow the [checksum-verified uv installation instructions](https://github.com/docxology/template/blob/main/docs/operational/build/dependency-management.md#installing-uv),
 or install it with Homebrew on macOS.
 ```
 

@@ -28,7 +28,7 @@ uv run python projects/working/my_eda_project/scripts/eda_analysis.py
 only the public canonical exemplars under `projects/templates/` are ever
 git-tracked. Your fork (`projects/working/my_eda_project/`) is local-only and
 won't be pushed even if you `git add -f` it. Read
-[`../../../../CLAUDE.md`](../../../../CLAUDE.md) "CONFIDENTIALITY INVARIANT" for
+[`CLAUDE.md`](https://github.com/docxology/template/blob/main/CLAUDE.md) "CONFIDENTIALITY INVARIANT" for
 the full fence.
 
 ## What you're forking

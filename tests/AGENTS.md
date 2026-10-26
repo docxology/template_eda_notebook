@@ -41,7 +41,7 @@ flowchart LR
     class DOCS doc
 ```
 
-Live test count: [`docs/_generated/COUNTS.md`](../../../../docs/_generated/COUNTS.md).
+Live test count: [`docs/_generated/COUNTS.md`](https://github.com/docxology/template/blob/main/docs/_generated/COUNTS.md).
 
 ## Running the suite
 
