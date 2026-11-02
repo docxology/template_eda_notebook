@@ -13,7 +13,7 @@ cells.
 We ship a deterministic dataset (`data/measurements.csv`) with a designed
 correlation structure and a handful of missing values, then load, clean,
 summarize, correlate, and visualize it entirely through tested functions in
-`src/eda/`. The library is side-effect-free — no plotting and no file I/O — and
+`src/template_eda_notebook/eda/`. The library is side-effect-free — no plotting and no file I/O — and
 standalone (numpy and pandas only), so it is covered above the 90% project gate
 and reused identically from the notebook, the thin analysis script
 (`scripts/eda_analysis.py`), and this manuscript.
@@ -40,7 +40,7 @@ for the [Research Project Template](https://github.com/docxology/template)
 ecosystem, demonstrating how a computational notebook can stay reproducible by
 delegating every computation to a fully-tested library. The prose, the labelled
 figures, and the summary table are all produced through an auditable custody
-chain: a deterministic dataset, tested functions in `src/eda/`, a thin analysis
+chain: a deterministic dataset, tested functions in `src/template_eda_notebook/eda/`, a thin analysis
 script, and multi-format rendering.
 
 ## Why exploratory data analysis
@@ -63,7 +63,7 @@ tested library the moment a computation matters.** Concretely:
    (`notebooks/eda_walkthrough.ipynb`) imports from `src` and calls tested
    functions; it contains no business logic of its own.
 2. Each analytical step — loading, cleaning, summarizing, correlating, preparing
-   figure data — is a typed, documented function in `src/eda/` with a test that
+   figure data — is a typed, documented function in `src/template_eda_notebook/eda/` with a test that
    asserts an exact numeric property.
 3. A thin script (`scripts/eda_analysis.py`) runs the same pipeline headless and
    writes the figures and a summary CSV to `output/`.
@@ -72,7 +72,7 @@ tested library the moment a computation matters.** Concretely:
 
 The project sits on the repository's three pillars:
 
-1. **`src/eda/` library**: pure pandas/numpy data transforms — no plotting, no
+1. **`src/template_eda_notebook/eda/` library**: pure pandas/numpy data transforms — no plotting, no
    file I/O, no `infrastructure` imports. This purity is what makes the library
    forkable and trivially testable.
 2. **`tests/` framework**: a zero-mock suite that exercises the library against
@@ -84,15 +84,16 @@ The project sits on the repository's three pillars:
 ## The dataset
 
 We analyze a small synthetic cohort of subject measurements — height (cm),
-weight (kg), and resting heart rate (bpm) across three groups — generated with a
-fixed seed so every statistic in [@sec:results] is reproducible. The data is
-shaped so that weight depends positively on height (a strong, easy-to-see
-correlation) while resting heart rate is only weakly related, and a few cells
-are left blank to exercise the missing-data path honestly.
+weight (kg), and resting heart rate (bpm) across three groups. The dataset is
+a static, committed fixture — the same file on every run — so every statistic
+in [@sec:results] is reproducible. The data is shaped so that weight depends
+positively on height (a strong, easy-to-see correlation) while resting heart
+rate is only weakly related, and a few cells are left blank to exercise the
+missing-data path honestly.
 
 ## Reader's guide to the manuscript
 
-- **[@sec:methodology]** ties each EDA step to its function in `src/eda/`.
+- **[@sec:methodology]** ties each EDA step to its function in `src/template_eda_notebook/eda/`.
 - **[@sec:results]** is figure-centric: each panel names the figure-data
   preparer that produced it.
 - **[@sec:experimental_setup]** lists the dataset schema and software
@@ -111,13 +112,13 @@ are left blank to exercise the missing-data path honestly.
 # Methodology {#sec:methodology}
 
 This section maps each step of the exploratory analysis to the tested function
-that implements it. Every function lives in `src/eda/`, takes a
+that implements it. Every function lives in `src/template_eda_notebook/eda/`, takes a
 `pandas.DataFrame` in, and returns data out — no plotting, no file I/O — so the
 notebook, the analysis script, and this manuscript all reach the same code.
 
 ## Dataset loading and schema
 
-`src/eda/dataset.py::load_dataset()` reads the shipped CSV and coerces the
+`src/template_eda_notebook/eda/dataset.py::load_dataset()` reads the shipped CSV and coerces the
 numeric columns with `pandas.to_numeric(errors="coerce")`. Coercion is
 deliberate: a blank or non-numeric cell becomes `NaN` rather than raising or
 being silently dropped, so missingness is *surfaced* and handled in an explicit
@@ -127,7 +128,7 @@ which downstream functions consult instead of re-sniffing dtypes.
 
 ## Cleaning: explicit, reported row removal
 
-`src/eda/cleaning.py::clean_dataset()` drops any row missing a numeric feature
+`src/template_eda_notebook/eda/cleaning.py::clean_dataset()` drops any row missing a numeric feature
 and returns a `CleaningReport` recording how many rows entered, how many
 remained, and how many were dropped. This exemplar makes a deliberate choice —
 listwise deletion with a visible count — rather than imputation, because a first
@@ -138,7 +139,7 @@ zeros instead of producing `inf`/`NaN`.
 
 ## Descriptive statistics
 
-`src/eda/statistics.py::summary_statistics()` returns one `ColumnSummary` per
+`src/template_eda_notebook/eda/statistics.py::summary_statistics()` returns one `ColumnSummary` per
 numeric column — count of non-missing observations, mean, sample standard
 deviation, minimum, median, and maximum — computed with real pandas
 aggregation. `group_means()` returns the mean of each numeric feature grouped by
@@ -146,8 +147,8 @@ the categorical column, sorted by group name for deterministic output.
 
 ## Correlation structure
 
-`src/eda/correlation.py::correlation_matrix()` returns the Pearson correlation
-matrix of the numeric columns [tukey1977eda]. The companion
+`src/template_eda_notebook/eda/correlation.py::correlation_matrix()` returns the Pearson correlation
+matrix of the numeric columns [@tukey1977eda]. The companion
 `strongest_pairs(matrix, top_n)` ranks the distinct off-diagonal feature pairs
 by absolute correlation while preserving sign — usually the single most useful
 artifact of a first pass, because it points directly at the relationships worth
@@ -155,7 +156,7 @@ investigating. Each unordered pair appears exactly once.
 
 ## Figure-data preparers
 
-Plotting is kept out of the library entirely. `src/eda/figures.py` returns
+Plotting is kept out of the library entirely. `src/template_eda_notebook/eda/figures.py` returns
 *plot-ready data structures* — bin counts and edges for a histogram, a square
 value grid plus labels for a correlation heatmap, and sorted category counts for
 a bar chart — as frozen dataclasses of plain numbers. The thin analysis script
@@ -178,13 +179,19 @@ The project is governed by a strict zero-mock policy, evaluated by running
    that every name imported `from src` exists in the library's public surface,
    and that no cell defines its own `def`/`class`.
 4. **Coverage gate**: CI enforces a ≥90% statement-coverage gate on
-   `projects/templates/template_eda_notebook/src/`; the live figure is tracked in
-   [`docs/_generated/COUNTS.md`](../../../../docs/_generated/COUNTS.md).
+Falling below that floor fails the gate outright (`--cov-fail-under` enforces it).
+   `projects/templates/template_eda_notebook/src/`; because the threshold is
+   wired through `--cov-fail-under`, any drop below the floor fails the test
+   process itself rather than producing a warning. The live figure is tracked in
+   [`docs/_generated/COUNTS.md`](../../../../docs/_generated/COUNTS.md). Negative
+   control: `tests/test_cleaning.py::TestCleanDataset::test_all_rows_missing_yields_empty`
+   feeds an all-invalid input frame and asserts the documented empty-frame result,
+   so the measured coverage exercises failure behavior, not only happy paths.
 
 ## Figure generation contract
 
 Each figure in `03_results.md` maps to a figure-data preparer in
-`src/eda/figures.py`: `histogram_data` → height histogram,
+`src/template_eda_notebook/eda/figures.py`: `histogram_data` → height histogram,
 `correlation_heatmap_data` → feature-correlation heatmap, and `group_count_data`
 → per-group row counts. Captions name the preparer and the key parameters (bin
 count, value range) so reviewers can navigate from the PDF to the code without
@@ -199,10 +206,11 @@ inferring hidden defaults.
 # Results {#sec:results}
 
 This section presents the exploratory analysis of the shipped dataset. Every
-figure and the summary table are produced by the thin analysis script
-([`scripts/eda_analysis.py`](https://github.com/docxology/template/blob/main/projects/templates/template_eda_notebook/scripts/eda_analysis.py)),
-which calls the tested figure-data preparers in `src/eda/figures.py`. Running
-the script regenerates the figures under `../figures/` and the summary CSV
+figure and the summary table are produced by the
+[EDA analysis orchestrator](https://github.com/docxology/template/blob/main/projects/templates/template_eda_notebook/scripts/eda_analysis.py)
+(`scripts/eda_analysis.py`),
+which calls the tested figure-data preparers in `src/template_eda_notebook/eda/figures.py`. Running
+the script regenerates the figures under `figures/` and the summary CSV
 under `output/data/`; the prose below describes what those artifacts show.
 
 ## Dataset and missingness
@@ -220,14 +228,14 @@ leaving a complete-case dataset for the analysis below.
 complete-case dataset, binned by `histogram_data()` and plotted by the analysis
 script.
 
-![Height distribution: bin counts produced by `histogram_data(frame, "height_cm", bins=10)` in `src/eda/figures.py` and plotted as a bar chart by `scripts/eda_analysis.py`. The bin counts sum to the number of complete-case rows; the shape is the roughly bell-shaped spread expected from the generating process.](../figures/height_histogram.png){#fig:height_histogram}
+![Height distribution: bin counts produced by `histogram_data(frame, "height_cm", bins=10)` in `src/template_eda_notebook/eda/figures.py` and plotted as a bar chart by `scripts/eda_analysis.py`. The bin counts sum to the number of complete-case rows; the shape is the roughly bell-shaped spread expected from the generating process.](figures/height_histogram.png){#fig:height_histogram}
 
 ## Group composition
 
 [@fig:group_counts] reports how many complete-case rows fall in each group,
 computed by `group_count_data()` (labels sorted for deterministic output).
 
-![Rows per group: sorted category labels and aligned counts from `group_count_data()`. The three groups are of comparable, though not identical, size; the counts sum to the complete-case row total.](../figures/group_counts.png){#fig:group_counts}
+![Rows per group: sorted category labels and aligned counts from `group_count_data()`. The three groups are of comparable, though not identical, size; the counts sum to the complete-case row total.](figures/group_counts.png){#fig:group_counts}
 
 ## Correlation structure
 
@@ -236,7 +244,7 @@ three numeric features, computed by `correlation_matrix()` and prepared for the
 heatmap by `correlation_heatmap_data()`. The diagonal is unity by construction
 and the matrix is symmetric.
 
-![Feature correlation heatmap: values from `correlation_heatmap_data()` (which wraps `correlation_matrix(method="pearson")`) rendered with a diverging colour map on the fixed range $[-1, 1]$. Height and weight are strongly positively correlated; resting heart rate is only weakly related to the other two.](../figures/correlation_heatmap.png){#fig:correlation_heatmap}
+![Feature correlation heatmap: values from `correlation_heatmap_data()` (which wraps `correlation_matrix(method="pearson")`) rendered with a diverging colour map on the fixed range $[-1, 1]$. Height and weight are strongly positively correlated; resting heart rate is only weakly related to the other two.](figures/correlation_heatmap.png){#fig:correlation_heatmap}
 
 `strongest_pairs(matrix, top_n=3)` ranks the distinct feature pairs by absolute
 correlation while preserving sign. On the shipped data the dominant relationship
@@ -259,7 +267,7 @@ minimum, median, and maximum for one numeric feature.
 | `resting_hr_bpm` | count, mean, std, min, median, max |
 
 : Summary-statistics table written by the analysis script from
-`src/eda/statistics.py::summary_statistics()`. The concrete numbers are
+`src/template_eda_notebook/eda/statistics.py::summary_statistics()`. The concrete numbers are
 reproduced verbatim by running the script — the manuscript intentionally does
 not transcribe volatile values, so prose and CSV cannot drift. {#tbl:summary_statistics}
 
@@ -309,7 +317,7 @@ tested code instead of carrying logic.
 Operating as the EDA exemplar for the Research Project Template methodology, the
 project deployed the three foundational pillars:
 
-1. **`src/eda/` library**: pure pandas/numpy data transforms — loading,
+1. **`src/template_eda_notebook/eda/` library**: pure pandas/numpy data transforms — loading,
    cleaning, summary statistics, correlation, and figure-data preparation — with
    no plotting, no file I/O, and no `infrastructure` imports.
 2. **`tests/` integrity**: a zero-mock suite over the shipped dataset and
@@ -323,7 +331,7 @@ project deployed the three foundational pillars:
 ### The notebook -> tested src extraction workflow
 
 The hallmark of this exemplar is the discipline it teaches: explore fast in a
-cell, and the moment a computation matters, move it into `src/eda/` behind a
+cell, and the moment a computation matters, move it into `src/template_eda_notebook/eda/` behind a
 failing test. The walkthrough notebook imports only the library's public surface
 and defines no functions of its own, a property the test suite enforces
 structurally so it cannot regress.
@@ -340,7 +348,7 @@ assumption.
 1. **Reproducibility follows from testing fidelity**: every number in
    [@sec:results] is produced by a tested function and regenerated on demand, so
    prose and artifacts cannot drift.
-2. **Purity enables reuse**: because `src/eda/` returns plot-ready data and never
+2. **Purity enables reuse**: because `src/template_eda_notebook/eda/` returns plot-ready data and never
    touches a display backend, the same functions serve the notebook, the
    headless script, and the manuscript.
 3. **Missingness is information**: reporting dropped rows beats imputing them
@@ -382,8 +390,8 @@ drift from a hardcoded value.
 ## Dataset
 
 The analysis uses a shipped, deterministic CSV fixture
-(`data/measurements.csv`) generated once with a fixed NumPy seed. It contains
-120 subject records with the following columns:
+(`data/measurements.csv`): a static, committed file with fixed content. It
+contains 120 subject records with the following columns:
 
 | Column | Role | Type |
 |---|---|---|
@@ -393,7 +401,7 @@ The analysis uses a shipped, deterministic CSV fixture
 | `weight_kg` | numeric feature | float |
 | `resting_hr_bpm` | numeric feature | float |
 
-These roles are declared once in `src/eda/dataset.py::DatasetSchema`, which the
+These roles are declared once in `src/template_eda_notebook/eda/dataset.py::DatasetSchema`, which the
 statistics, correlation, and figure functions consult. The generating process
 makes weight depend positively on height (a strong correlation) while resting
 heart rate is only weakly related, and a few numeric cells are left blank to
@@ -425,14 +433,14 @@ numeric features.
 The typical analysis order is:
 
 1. `scripts/eda_analysis.py` — loads and cleans the dataset, then writes
-   `../figures/*.png` and `output/data/summary_statistics.csv`, printing each
+   `figures/*.png` and `output/data/summary_statistics.csv`, printing each
    output path for manifest collection.
 2. PDF rendering reads `manuscript/*.md` and `config.yaml` so figure paths and
    prose match the analysis that just completed.
 
 ## Relation to figures
 
-| Figure ([@sec:results]) | Figure-data preparer (`src/eda/figures.py`) | Primary inputs |
+| Figure ([@sec:results]) | Figure-data preparer (`src/template_eda_notebook/eda/figures.py`) | Primary inputs |
 |---|---|---|
 | Height histogram | `histogram_data()` | `height_cm` column, 10 bins |
 | Rows per group | `group_count_data()` | `group` column |
@@ -461,17 +469,20 @@ From the repository root:
 # 1. Run the analysis (writes figures + summary CSV, prints output paths)
 uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
 
+# 1b. Regenerate the deterministic dataset sibling (optional; stage 02 runs it too)
+uv run python projects/templates/template_eda_notebook/scripts/generate_measurements_data.py
+
 # 2. Run the test suite with the coverage gate
 uv run pytest projects/templates/template_eda_notebook/tests \
     --cov=projects/templates/template_eda_notebook/src --cov-fail-under=90
 
 # 3. Render the manuscript
-uv run python scripts/03_render_pdf.py --project templates/template_eda_notebook
+uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook
 ```
 
 ## Generated artifact registry
 
-The analysis script writes the following artifacts under
+The analysis scripts write the following artifacts under
 `projects/templates/template_eda_notebook/output/`:
 
 | Artifact | Produced by |
@@ -480,18 +491,26 @@ The analysis script writes the following artifacts under
 | `figures/correlation_heatmap.png` | `correlation_heatmap_data()` + analysis script |
 | `figures/group_counts.png` | `group_count_data()` + analysis script |
 | `data/summary_statistics.csv` | `summary_statistics()` + analysis script |
+| `data/measurements_generated.csv` | `generate_measurements()` + generator script |
 
 The `output/` tree is disposable and regenerated on every run; it is not the
 source of truth.
 
 ## Determinism
 
-- The dataset (`data/measurements.csv`) is a static, committed fixture generated
-  once with a fixed NumPy seed, so every statistic is reproducible bit-for-bit.
+- The dataset (`data/measurements.csv`) is a static, committed fixture with
+  fixed content — the same file is read on every run, so every statistic is
+  reproducible bit-for-bit.
 - The figure-data preparers are pure transforms with no RNG; the same inputs
   always produce the same bin counts, correlation values, and group counts.
 - `clean_dataset()` reports exactly how many rows it removed, so the
   complete-case row count is a checkable invariant.
+- `generate_measurements()` (`src/template_eda_notebook/eda/generate.py`) regenerates a deterministic
+  *sibling* of the dataset from a fixed NumPy seed: the same schema, 120 rows,
+  the same missingness pattern, and the same correlation sign structure. The
+  original fixture's exact random draw order is not recoverable, so the
+  generator deliberately reproduces the fixture's documented contract rather
+  than a byte-exact clone.
 
 ## Verification (no hand-transcribed numbers)
 
@@ -513,17 +532,17 @@ cell defines its own logic.
 
 This section situates the exemplar and states explicit boundaries. The goal is
 not to compete with comprehensive treatments of exploratory data analysis
-[tukey1977eda] or statistical graphics [wilkinson2005grammar], but to show how
+[@tukey1977eda] or statistical graphics [@wilkinson2005grammar], but to show how
 a minimal, test-backed EDA story fits the template's reproducibility and
-rendering stack [peng2011reproducible].
+rendering stack [@peng2011reproducible].
 
 ## Exploratory data analysis
 
 The practice of examining a dataset before formal modelling — looking at
 distributions, missingness, and relationships — traces to Tukey's foundational
-work [tukey1977eda] and is supported in modern practice by the pandas data
-analysis toolkit [mckinney2010pandas] and the broader scientific-Python
-stack [harris2020numpy]. The present manuscript restricts attention to a
+work [@tukey1977eda] and is supported in modern practice by the pandas data
+analysis toolkit [@mckinney2010pandas] and the broader scientific-Python
+stack [@harris2020numpy]. The present manuscript restricts attention to a
 **first pass** on a **small tabular dataset**: load, surface missingness, compute
 descriptive statistics and per-group means, and rank features by Pearson
 correlation.
@@ -539,7 +558,7 @@ statistical machinery.
 ## What this project proves about the template
 
 The analytical steps here are standard. The **non-standard** contribution is
-procedural: the same tested functions in `src/eda/` back the interactive
+procedural: the same tested functions in `src/template_eda_notebook/eda/` back the interactive
 notebook, the headless analysis script, and this manuscript, so the figures and
 the summary table always refer to the same code. That pattern is what downstream
 projects should copy — whether the domain is survey data, sensor logs, or
@@ -569,7 +588,7 @@ complexity.
 
 # References {#sec:references}
 
-Bibliography lives in [`manuscript/references.bib`](references.bib) and is read by Pandoc during PDF render. The build pipeline invokes Pandoc with `--natbib`, so every `[key]` citation in the manuscript is rewritten to the appropriate `\cite{}`/`\citep{}`/`\citet{}` LaTeX command and resolved against the bib file.
+Bibliography lives in [`manuscript/references.bib`](references.bib) and is read by Pandoc during PDF render. The build pipeline invokes Pandoc with `--natbib`, so every `[@key]` citation in the manuscript is rewritten to the appropriate `\cite{}`/`\citep{}`/`\citet{}` LaTeX command and resolved against the bib file.
 
 To validate that `references.bib` is syntactically clean and contains the required fields per entry type:
 
