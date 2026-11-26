@@ -28,10 +28,10 @@ signal: move that code to `scripts/` and test the `src/` boundary directly.
 | `test_eda_analysis_script.py` | Thin script `run_eda()` writes real figures + summary CSV to a temp root |
 | `test_notebook.py` | Notebook is valid nbformat; imports bind to `src.__all__`; cells define no logic |
 
-Configuration: `projects/templates/template_eda_notebook/pyproject.toml`
+Configuration: `projects/working/template_eda_notebook/pyproject.toml`
 (`fail_under = 90`, matching the root pipeline gate).
 
-Conftest: `projects/templates/template_eda_notebook/tests/conftest.py`
+Conftest: `projects/working/template_eda_notebook/tests/conftest.py`
 (sets `MPLBACKEND=Agg`, adds `src/` and the repo root to `sys.path`).
 
 Live test count and coverage percentage:
@@ -81,7 +81,7 @@ fail_under = 90
 Authoritative gate (measures all of `src/`):
 
 ```bash
-cd projects/templates/template_eda_notebook
+cd projects/working/template_eda_notebook
 uv run pytest tests/ --cov=src --cov-report=term-missing --cov-fail-under=90
 ```
 
@@ -108,7 +108,7 @@ A green exit code is **not** proof the suite ran. Confirm **N collected > 0 AND
 coverage ≥ 90%**.
 
 ```bash
-cd projects/templates/template_eda_notebook
+cd projects/working/template_eda_notebook
 uv run pytest tests/ --cov=src --cov-fail-under=90 -q
 ```
 

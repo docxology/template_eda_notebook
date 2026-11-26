@@ -4,10 +4,10 @@ type: "manuscript_guide"
 version: "1.0.0"
 ---
 
-# Manuscript (`projects/templates/template_eda_notebook/manuscript/`)
+# Manuscript (`projects/working/template_eda_notebook/docs/manuscript/`)
 
 Repository-wide agent rules for this exemplar live in
-[`../docs/agent_instructions.md`](../docs/agent_instructions.md). This file
+[`../docs/agent_instructions.md`](../agent_instructions.md). This file
 covers **manuscript-specific** editing: file roles, figure protocol, and the
 section modification workflow.
 
@@ -15,7 +15,7 @@ This exemplar keeps the manuscript deliberately simple: it describes the EDA
 workflow in prose and references the figures the analysis script produces. It
 does **not** use the `{{VARIABLE}}` token-injection pipeline — every numeric
 claim is either reproduced by the reader running `scripts/eda_analysis.py` or
-registered in [`../data/claim_ledger.yaml`](../data/claim_ledger.yaml). The
+registered in [`../data/claim_ledger.yaml`](../../data/claim_ledger.yaml). The
 `config.yaml` block remains the configuration source of truth for paper
 metadata.
 
@@ -55,7 +55,7 @@ figure-data preparer in `src/eda/figures.py`:
 
 1. Add a figure-data preparer to `src/eda/figures.py` (returns a dataclass of
    numbers; no matplotlib) and a test in `tests/test_figures.py`.
-2. Plot it in [`../scripts/eda_analysis.py`](../scripts/eda_analysis.py) and
+2. Plot it in [`../scripts/eda_analysis.py`](../../scripts/eda_analysis.py) and
    write the PNG under `output/figures/`.
 3. Reference it in a manuscript section with a Pandoc image line and `{#fig:…}`.
 
@@ -66,11 +66,11 @@ figure-data preparer in `src/eda/figures.py`:
 2. **Add or extend tests** in the matching `tests/test_*.py`.
 3. **Regenerate analysis outputs**:
    ```bash
-   uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
+   uv run python projects/working/template_eda_notebook/scripts/eda_analysis.py
    ```
 4. **Render PDF** from the repository root:
    ```bash
-   uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook
+   uv run python scripts/pipeline/stage_03_render.py --project working/template_eda_notebook
    ```
 5. **Verify figures and the summary table appear** in the rendered PDF.
 
@@ -87,6 +87,6 @@ figure-data preparer in `src/eda/figures.py`:
 
 - [`README.md`](README.md) — Quick orientation.
 - [`SYNTAX.md`](SYNTAX.md) — Pandoc syntax reference for this manuscript.
-- [`../docs/rendering_pipeline.md`](../docs/rendering_pipeline.md) — Manuscript → PDF flow.
-- [`../src/eda/figures.py`](../src/eda/figures.py) — Figure-data preparers.
-- [`../scripts/eda_analysis.py`](../scripts/eda_analysis.py) — Thin orchestrator that writes the figures.
+- [`../docs/rendering_pipeline.md`](../rendering_pipeline.md) — Manuscript → PDF flow.
+- [`../src/eda/figures.py`](../../src/eda/figures.py) — Figure-data preparers.
+- [`../scripts/eda_analysis.py`](../../scripts/eda_analysis.py) — Thin orchestrator that writes the figures.

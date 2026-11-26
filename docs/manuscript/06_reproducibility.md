@@ -10,23 +10,23 @@ From the repository root:
 
 ```bash
 # 1. Run the analysis (writes figures + summary CSV, prints output paths)
-uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
+uv run python projects/working/template_eda_notebook/scripts/eda_analysis.py
 
 # 1b. Regenerate the deterministic dataset sibling (optional; stage 02 runs it too)
-uv run python projects/templates/template_eda_notebook/scripts/generate_measurements_data.py
+uv run python projects/working/template_eda_notebook/scripts/generate_measurements_data.py
 
 # 2. Run the test suite with the coverage gate
-uv run pytest projects/templates/template_eda_notebook/tests \
-    --cov=projects/templates/template_eda_notebook/src --cov-fail-under=90
+uv run pytest projects/working/template_eda_notebook/tests \
+    --cov=projects/working/template_eda_notebook/src --cov-fail-under=90
 
 # 3. Render the manuscript
-uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook
+uv run python scripts/pipeline/stage_03_render.py --project working/template_eda_notebook
 ```
 
 ## Generated artifact registry
 
 The analysis scripts write the following artifacts under
-`projects/templates/template_eda_notebook/output/`:
+`projects/working/template_eda_notebook/output/`:
 
 | Artifact | Produced by |
 |---|---|

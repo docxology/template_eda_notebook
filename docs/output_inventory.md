@@ -4,7 +4,7 @@
 > the contract between the pipeline and the manuscript: it inventories what the
 > pipeline produces, which generator emits it, and which stage it lands in.
 
-Paths in the table are relative to `projects/templates/template_eda_notebook/`.
+Paths in the table are relative to `projects/working/template_eda_notebook/`.
 
 ## File Inventory
 
@@ -31,27 +31,27 @@ CI artifact upload.
    `output/figures/`.
 3. Append a row to the table above naming the file, role, generator, and stage.
 4. If the manuscript references it, add a `{#fig:label}` in the appropriate
-   `manuscript/*.md` section.
+   `docs/manuscript/*.md` section.
 5. Re-run the analysis and confirm the new file appears.
 
 ## Regeneration Sequence
 
 ```bash
 # 1. Clean (optional)
-rm -rf projects/templates/template_eda_notebook/output/
+rm -rf projects/working/template_eda_notebook/output/
 
 # 2. Run analysis (produces figures/ + data/summary_statistics.csv)
-uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
+uv run python projects/working/template_eda_notebook/scripts/eda_analysis.py
 
 # 3. Render PDF (produces pdf/, web/)
-uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook
+uv run python scripts/pipeline/stage_03_render.py --project working/template_eda_notebook
 
 # 4. Copy final deliverables to repo-level output/
-uv run python scripts/pipeline/stage_05_copy.py --project templates/template_eda_notebook
+uv run python scripts/pipeline/stage_05_copy.py --project working/template_eda_notebook
 ```
 
 ## See Also
 
 - [`output_conventions.md`](output_conventions.md) — layout, regeneration policy, troubleshooting.
 - [`rendering_pipeline.md`](rendering_pipeline.md) — manuscript → PDF flow.
-- [`../manuscript/AGENTS.md`](../manuscript/AGENTS.md) — manuscript directory and figure protocol.
+- [`../manuscript/AGENTS.md`](manuscript/AGENTS.md) — manuscript directory and figure protocol.

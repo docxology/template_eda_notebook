@@ -66,6 +66,7 @@ class EdaFigureSpec:
     filename: str
     caption: str
     generated_by: str
+    alt_text: str
 
 
 FIGURE_REGISTRY_SCHEMA = "template-eda-notebook-figure-registry-v1"
@@ -75,18 +76,21 @@ EDA_FIGURE_SPECS: tuple[EdaFigureSpec, ...] = (
         label="fig:height_histogram",
         filename="height_histogram.png",
         caption="Height distribution computed from complete-case histogram bins.",
+        alt_text="Histogram of complete-case heights in centimeters with a roughly bell-shaped distribution.",
         generated_by="scripts.eda_analysis.run_eda",
     ),
     EdaFigureSpec(
         label="fig:group_counts",
         filename="group_counts.png",
         caption="Complete-case row counts for each sorted study group.",
+        alt_text="Bar chart showing similar counts across the three study groups.",
         generated_by="scripts.eda_analysis.run_eda",
     ),
     EdaFigureSpec(
         label="fig:correlation_heatmap",
         filename="correlation_heatmap.png",
         caption="Pearson feature-correlation matrix rendered on a fixed minus-one-to-one scale.",
+        alt_text="Heatmap showing a strong positive correlation between height and weight and weak correlations with resting heart rate.",
         generated_by="scripts.eda_analysis.run_eda",
     ),
 )

@@ -3,7 +3,7 @@
 Symptom-driven recipes for the most common breakage modes when running this
 project.
 
-## Edited `data/measurements.csv` or `manuscript/config.yaml` but the figures/PDF didn't change
+## Edited `data/measurements.csv` or `docs/manuscript/config.yaml` but the figures/PDF didn't change
 
 **Cause.** The analysis stage was skipped, or only the render stage ran (it does
 not re-execute `eda_analysis.py`).
@@ -11,14 +11,14 @@ not re-execute `eda_analysis.py`).
 **Fix.** Run analysis first, then render:
 
 ```bash
-uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
-uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook
+uv run python projects/working/template_eda_notebook/scripts/eda_analysis.py
+uv run python scripts/pipeline/stage_03_render.py --project working/template_eda_notebook
 ```
 
 Or re-run the full pipeline:
 
 ```bash
-uv run python scripts/runner/execute_pipeline.py --project templates/template_eda_notebook --mode core
+uv run python scripts/runner/execute_pipeline.py --project working/template_eda_notebook --mode core
 ```
 
 ## `FileNotFoundError: dataset CSV not found`
@@ -35,7 +35,7 @@ and update `src/eda/dataset.py::DatasetSchema` to match its columns.
 
 **Fix.**
 
-1. Verify `manuscript/03_results.md` contains the image with the correct anchor:
+1. Verify `docs/manuscript/03_results.md` contains the image with the correct anchor:
    ```markdown
    ![Caption.](../output/figures/correlation_heatmap.png){#fig:correlation_heatmap}
    ```
@@ -48,12 +48,12 @@ and update `src/eda/dataset.py::DatasetSchema` to match its columns.
 
 1. Re-run with the full traceback visible:
    ```bash
-   uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py 2>&1 | tee /tmp/analysis.log
+   uv run python projects/working/template_eda_notebook/scripts/eda_analysis.py 2>&1 | tee /tmp/analysis.log
    ```
 2. Check the output directory exists and is writable.
-3. Validate `manuscript/config.yaml`:
+3. Validate `docs/manuscript/config.yaml`:
    ```bash
-   uv run python -c "import yaml; yaml.safe_load(open('projects/templates/template_eda_notebook/manuscript/config.yaml'))"
+   uv run python -c "import yaml; yaml.safe_load(open('projects/working/template_eda_notebook/docs/manuscript/config.yaml'))"
    ```
 
 ## `output/figures/` is empty after running the script
@@ -80,8 +80,8 @@ or install it with Homebrew on macOS.
 
 1. Find which lines are uncovered:
    ```bash
-   uv run pytest projects/templates/template_eda_notebook/tests \
-       --cov=projects/templates/template_eda_notebook/src --cov-report=term-missing -v
+   uv run pytest projects/working/template_eda_notebook/tests \
+       --cov=projects/working/template_eda_notebook/src --cov-report=term-missing -v
    ```
 2. Add tests covering the missing branches.
 3. Re-run until coverage ≥ 90% and all tests pass.
@@ -93,30 +93,6 @@ cell defines its own `def`/`class`.
 
 **Fix.** Export the name from `src/__init__.py`, or move the cell's logic into a
 tested `src/eda/` function and call it from the cell.
-
-## PDF Rendering fails: `mmdc` could not find Chrome
-
-**Symptom:** the pipeline reaches **PDF Rendering** and fails even though tests,
-analysis, and per-section slide PDFs passed, with an error like:
-
-```
-mmdc failed for inline_mermaid_0001_...: Could not find Chrome (ver. ...).
-```
-
-**Cause:** a section (or doc diagram) embeds a ```mermaid``` block; the
-combined-PDF render shells out to `mmdc`, which needs a pinned
-`chrome-headless-shell` in the Puppeteer cache. Slide PDFs do not invoke `mmdc`,
-so they still succeed — that asymmetry is the tell.
-
-**Fix:**
-
-```bash
-npx --yes puppeteer browsers install chrome-headless-shell
-uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook
-```
-
-CI provisions it; a fresh clone does not. See
-[rendering_pipeline.md](rendering_pipeline.md#prerequisite-mermaid-diagrams-need-chrome-headless-shell).
 
 ## Tests report PASSED but ran 0 tests / 0.0% coverage
 
@@ -131,18 +107,18 @@ with zero collected tests is not a pass.**
 AND coverage ≥ 90%:
 
 ```bash
-uv run pytest projects/templates/template_eda_notebook/tests \
-  --cov=projects/templates/template_eda_notebook/src --cov-fail-under=90
+uv run pytest projects/working/template_eda_notebook/tests \
+  --cov=projects/working/template_eda_notebook/src --cov-fail-under=90
 ```
 
-## YAML parse error in `manuscript/config.yaml`
+## YAML parse error in `docs/manuscript/config.yaml`
 
 **Common mistakes:** tabs instead of spaces, trailing commas, unclosed quotes.
 
 **Fix.** Validate before running:
 
 ```bash
-uv run python -c "import yaml; yaml.safe_load(open('projects/templates/template_eda_notebook/manuscript/config.yaml'))"
+uv run python -c "import yaml; yaml.safe_load(open('projects/working/template_eda_notebook/docs/manuscript/config.yaml'))"
 ```
 
 ## See also

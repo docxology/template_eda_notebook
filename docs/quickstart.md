@@ -1,97 +1,63 @@
-# Quick Start Guide
+# Run the EDA notebook and manuscript
 
-Get up and running with the `template_eda_notebook` exemplar in 5 minutes.
+The [walkthrough](../notebooks/eda_walkthrough.ipynb) loads the committed,
+synthetic [measurements CSV](../data/measurements.csv), reports incomplete cells,
+and calls the EDA library for complete-case summaries and correlations. From the
+EDA project directory, open the notebook with a Python kernel that has the project
+dependencies. For example:
 
-## Prerequisites
-
-- Python 3.10 or higher
-- [`uv`](https://github.com/astral-sh/uv) package manager (repo invariant — see the monorepo [`CLAUDE.md`](https://github.com/docxology/template/blob/main/CLAUDE.md))
-- Git
-
-## Setup (One-Time)
-
-```bash
-# 1. Clone the template repository (if you haven't already)
-git clone https://github.com/docxology/template.git
-cd template
-
-# 2. Install dependencies at the repository root
-uv sync
-
-# 3. Verify installation
-uv run python --version
+```sh
+uv sync --locked --extra dev
+MPLBACKEND=module://matplotlib_inline.backend_inline uv run --with jupyterlab jupyter lab notebooks/eda_walkthrough.ipynb
 ```
 
-## Run the Test Suite
+When editing the notebook or EDA library, run
+`uv run python scripts/refresh_notebook_binding.py` to update the source binding
+and review the diff with the corresponding behavioral changes.
 
-Validate the environment and check that the project test suite passes with the
-≥90% coverage gate:
+## Register the checkout and run the tests
 
-```bash
-uv run pytest projects/templates/template_eda_notebook/tests -v --tb=short
+Install Python 3.15, uv, Pandoc 3.14, matching pandoc-crossref v0.3.26b, and
+XeLaTeX with the [template's TeX packages](https://github.com/docxology/template/blob/87704feae0a4490ef7dad9c931d268e8c30273c2/README.md#L565-L574).
+Set `EDA_CHECKOUT` to the absolute path of a clean checkout.
+
+```sh
+git clone https://github.com/docxology/template.git eda-template-runner
+cd eda-template-runner
+git checkout --detach 87704feae0a4490ef7dad9c931d268e8c30273c2
+uv sync --locked --python 3.15
+project=projects/working/template_eda_notebook
+mkdir -p projects/working
+git -C "$EDA_CHECKOUT" worktree add --detach "$PWD/$project" HEAD
+uv run --no-sync --with pytest --with pytest-cov pytest "$project/tests" \
+  --cov="$project/src" --cov-fail-under=90
 ```
 
-Expected: passing tests and coverage above the 90% gate. Live collection counts
-are tracked in [`docs/_generated/COUNTS.md`](https://github.com/docxology/template/blob/main/docs/_generated/COUNTS.md).
+The tests include the notebook-to-library binding and the headless analysis.
+Run the following commands from the template checkout. Move the tracked
+publication snapshot aside in the disposable worktree to start with fresh
+artifacts.
 
-## Execute the Analysis Pipeline
-
-Generate the EDA figures and the summary table:
-
-```bash
-uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
+```sh
+mv "$project/output" "$(mktemp -d)/published-output"
+uv run python "$project/scripts/eda_analysis.py"
+uv run python "$project/scripts/generate_measurements_data.py"
+uv run python scripts/pipeline/stage_03_render.py --project working/template_eda_notebook
+uv run python scripts/pipeline/stage_04_validate.py --project working/template_eda_notebook
 ```
 
-**Outputs created under `projects/templates/template_eda_notebook/output/`:**
-- `figures/` — `height_histogram.png`, `correlation_heatmap.png`, `group_counts.png`
-- `data/` — `summary_statistics.csv`
+The analysis reads `data/measurements.csv` and writes three real plots, a
+summary CSV, and a figure registry. The separate generator writes a synthetic
+sibling at `output/data/measurements_generated.csv`. The
+[configuration](manuscript/config.yaml) controls publication metadata and render
+formats. Inspect the combined PDF in `$project/output/pdf/`, HTML at
+`$project/output/web/index.html`, and the slide PDFs under
+`$project/output/slides/`. Validation and provenance live in
+`$project/output/reports/`.
 
-## Explore Interactively
+After generating figures, run the offline link check from the staged project:
 
-Open the walkthrough notebook, which calls the same tested `src.eda` functions:
-
+```sh
+git diff --check
+lychee --offline README.md STANDALONE.md AGENTS.md 'docs/**/*.md'
 ```
-notebooks/eda_walkthrough.ipynb
-```
-
-The cells contain no business logic — each one imports from `src` and calls a
-tested function. This is the notebook -> tested src extraction workflow in
-action.
-
-## Render the Publication PDF
-
-```bash
-uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook
-```
-
-## View Results
-
-- **Figures**: browse `projects/templates/template_eda_notebook/output/figures/`
-- **Summary table**: `cat projects/templates/template_eda_notebook/output/data/summary_statistics.csv`
-- **PDF manuscript**: under `output/.../pdf/` after rendering
-
-## Common Next Steps
-
-- **Use your own data**: replace `data/measurements.csv` and update
-  `src/eda/dataset.py::DatasetSchema`, then re-run the analysis.
-- **Add a new EDA step**: extend a module in `src/eda/`, add a test, then call it
-  from the notebook and `scripts/eda_analysis.py` (see `docs/architecture.md`).
-- **Modify the manuscript**: edit markdown files under `manuscript/`, then
-  re-render.
-
-## Getting Help
-
-- **Full documentation**: [`docs/README.md`](README.md) — navigation hub.
-- **Agent rules**: [`docs/agent_instructions.md`](agent_instructions.md).
-- **Troubleshooting**: [`docs/troubleshooting.md`](troubleshooting.md).
-- **FAQ**: [`docs/faq.md`](faq.md).
-
-## Quick Command Reference
-
-| Task | Command |
-|---|---|
-| Run tests | `uv run pytest projects/templates/template_eda_notebook/tests -v` |
-| Run analysis | `uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py` |
-| Render PDF | `uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook` |
-| Copy final deliverables | `uv run python scripts/pipeline/stage_05_copy.py --project templates/template_eda_notebook` |
-| Clean outputs | `rm -rf projects/templates/template_eda_notebook/output/` |
