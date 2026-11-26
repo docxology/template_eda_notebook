@@ -20,7 +20,7 @@ All citation keys must exist in [`references.bib`](references.bib). Pandoc with
 ## Figure References
 
 ```markdown
-![Height distribution histogram](../output/figures/height_histogram.png){#fig:height_histogram width=80%}
+![Height distribution histogram](../../output/figures/height_histogram.png){#fig:height_histogram width=80%}
 
 [@fig:height_histogram] shows...
 ```
@@ -77,7 +77,7 @@ reordering:
 
 This exemplar does **not** use `{{VARIABLE}}` token injection. Concrete numbers
 are reproduced by running `scripts/eda_analysis.py`; numeric claims that appear
-in prose are registered in [`../data/claim_ledger.yaml`](../data/claim_ledger.yaml)
+in prose are registered in [`../data/claim_ledger.yaml`](../../data/claim_ledger.yaml)
 for evidence validation. Prefer describing structure and provenance over
 transcribing volatile values.
 
@@ -104,4 +104,4 @@ first; `99_` renders references last.
 
 - [`docs/guides/manuscript-semantics.md`](https://github.com/docxology/template/blob/main/docs/guides/manuscript-semantics.md) — Repository-wide canonical semantics.
 - [`AGENTS.md`](AGENTS.md) — Figure protocol and section-modification workflow.
-- [`../docs/rendering_pipeline.md`](../docs/rendering_pipeline.md) — Full rendering flow.
+- [`../docs/rendering_pipeline.md`](../rendering_pipeline.md) — Full rendering flow.

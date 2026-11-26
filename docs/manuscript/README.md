@@ -6,17 +6,19 @@ thin analysis script — every claim traces to a tested function in `src/eda/`.
 
 ## Manuscript Structure
 
-The `manuscript/` directory contains the raw markdown the renderer
+The `docs/manuscript/` directory contains the raw markdown the renderer
 (`infrastructure/rendering/pdf_renderer.py`) transforms into the final PDF:
 
-- `00_abstract.md`: Abstract — the EDA archetype and the headline finding.
-- `01_introduction.md`: Why EDA; the notebook -> tested src extraction idea.
-- `02_methodology.md`: Dataset, cleaning, statistics, correlation, figure data.
-- `03_results.md`: The EDA figures and the summary-statistics table.
-- `04_conclusion.md`: What the workflow guarantees.
-- `05_experimental_setup.md`: Dataset schema, environment, reproduction commands.
-- `06_reproducibility.md`: Artifact inventory and regeneration commands.
-- `07_scope_and_related_work.md`: Scope limits and related EDA literature.
+- [`00_abstract.md`](00_abstract.md) — Abstract — the EDA archetype and the headline finding.
+- [`01_introduction.md`](01_introduction.md) — Why EDA; the notebook -> tested src extraction idea.
+- [`02_methodology.md`](02_methodology.md) — Dataset, cleaning, statistics, correlation, figure data.
+- [`03_results.md`](03_results.md) — The EDA figures and the summary-statistics table.
+- [`04_conclusion.md`](04_conclusion.md) — What the workflow guarantees.
+- [`05_experimental_setup.md`](05_experimental_setup.md) — Dataset schema, environment, reproduction commands.
+- [`06_reproducibility.md`](06_reproducibility.md) — Artifact inventory and regeneration commands.
+- [`07_scope_and_related_work.md`](07_scope_and_related_work.md) — Scope limits and related EDA literature.
+
+- [References](99_references.md) and [bibliography](references.bib)
 
 ## Architecture
 
@@ -27,7 +29,7 @@ graph TD
 
     Script["scripts/eda_analysis.py"]:::project
     Lib["src/eda/*"]:::project
-    Manuscript["manuscript/*.md"]:::project
+    Manuscript["docs/manuscript/*.md"]:::project
     Rendering["infrastructure.rendering"]:::infra
 
     Script -->|calls| Lib
@@ -37,13 +39,9 @@ graph TD
     Rendering -->|produces| PDF["output/.../pdf/...combined.pdf"]:::project
 ```
 
-## Quick Start
+## Build
 
-```bash
-# From repository root
-uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
-uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook
-```
+Use the [pinned quickstart](../quickstart.md) to generate the figures and render the paper.
 
 ## AI Agent Directives
 

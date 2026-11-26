@@ -2,7 +2,7 @@
 
 ## Overview
 
-Technical guide for `projects/templates/template_eda_notebook/docs/` — the
+Technical guide for `projects/working/template_eda_notebook/docs/` — the
 operational rulebook for AI agents and developers working inside the
 `template_eda_notebook` exemplar.
 
@@ -47,16 +47,16 @@ computation is wrong — they test call signatures, not results.
 
 ```bash
 # Test suite passes + coverage >= 90%
-uv run pytest projects/templates/template_eda_notebook/tests \
-    --cov=projects/templates/template_eda_notebook/src --cov-fail-under=90 -q
+uv run pytest projects/working/template_eda_notebook/tests \
+    --cov=projects/working/template_eda_notebook/src --cov-fail-under=90 -q
 
 # No mocks in tests/
 grep -r "unittest.mock\|MagicMock\|@patch\|create_autospec" \
-    projects/templates/template_eda_notebook/tests/ || echo "Clean"
+    projects/working/template_eda_notebook/tests/ || echo "Clean"
 
 # src/ has no infrastructure imports
 grep -rnE "^(from|import) infrastructure" \
-    projects/templates/template_eda_notebook/src/ \
+    projects/working/template_eda_notebook/src/ \
     || echo "Clean — the EDA library is infrastructure-free"
 ```
 
@@ -73,11 +73,11 @@ grep -rnE "^(from|import) infrastructure" \
 | `scripts/eda_analysis.py` | REQUIRED | Pipeline analysis entry point; writes figures + summary CSV |
 | `scripts/generate_measurements_data.py` | AESTHETIC (discovered by stage 02) | Regenerates a deterministic sibling of the shipped CSV under `output/data/` |
 | `notebooks/eda_walkthrough.ipynb` | REQUIRED (exemplar) | The archetype this template demonstrates; `tests/test_notebook.py` |
-| `manuscript/config.yaml` | REQUIRED | Loaded by `infrastructure.rendering`; pipeline aborts without it |
-| `manuscript/*.md` | REQUIRED | Pandoc reads these during the PDF stage |
-| `manuscript/references.bib` | REQUIRED | Pandoc citeproc reads it |
-| `manuscript/preamble.md` | REQUIRED | Injected at PDF compile |
-| `manuscript/SYNTAX.md`, `config.yaml.example`, `AGENTS.md` | AESTHETIC | Authoring/agent guides; pipeline never reads them |
+| `docs/manuscript/config.yaml` | REQUIRED | Loaded by `infrastructure.rendering`; pipeline aborts without it |
+| `docs/manuscript/*.md` | REQUIRED | Pandoc reads these during the PDF stage |
+| `docs/manuscript/references.bib` | REQUIRED | Pandoc citeproc reads it |
+| `docs/manuscript/preamble.md` | REQUIRED | Injected at PDF compile |
+| `docs/manuscript/SYNTAX.md`, `config.yaml.example`, `AGENTS.md` | AESTHETIC | Authoring/agent guides; pipeline never reads them |
 | `docs/*.md` | AESTHETIC | Agent + human documentation |
 | `src/STYLE.md`, `tests/PATTERNS.md`, `scripts/CONVENTIONS.md` | AESTHETIC | Per-subdir conventions |
 | `pyproject.toml` | REQUIRED | Coverage gate config, pytest options, dependencies |
@@ -92,4 +92,4 @@ misleads future contributors; it just means no pre-commit hook catches it.
 - [`../AGENTS.md`](../AGENTS.md) — Project-level documentation.
 - [`../pyproject.toml`](../pyproject.toml) — Coverage gate settings.
 - [`../tests/conftest.py`](../tests/conftest.py) — `sys.path` setup and `MPLBACKEND=Agg`.
-- [`../manuscript/AGENTS.md`](../manuscript/AGENTS.md) — Manuscript directory rules.
+- [`../manuscript/AGENTS.md`](manuscript/AGENTS.md) — Manuscript directory rules.

@@ -56,7 +56,7 @@ every preparer testable without a display backend.
 ## Zero-mock testing methodology
 
 The project is governed by a strict zero-mock policy, evaluated by running
-`uv run pytest projects/templates/template_eda_notebook/tests` during the build.
+`uv run pytest projects/working/template_eda_notebook/tests` during the build.
 
 1. **Library tests** exercise every public function against the shipped CSV or a
    tiny hand-built frame with values chosen so the expected statistic is exact
@@ -68,7 +68,7 @@ The project is governed by a strict zero-mock policy, evaluated by running
    that every name imported `from src` exists in the library's public surface,
    and that no cell defines its own `def`/`class`.
 4. **Coverage gate**: CI enforces a ≥90% statement-coverage gate on
-   `projects/templates/template_eda_notebook/src/`; the live figure is tracked in
+   `projects/working/template_eda_notebook/src/`; the live figure is tracked in
    [`docs/_generated/COUNTS.md`](https://github.com/docxology/template/blob/main/docs/_generated/COUNTS.md).
 
 ## Figure generation contract

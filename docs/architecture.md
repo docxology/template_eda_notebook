@@ -81,5 +81,5 @@ Follow these steps in order:
    function; never put logic in the cell.
 4. **Wire it into `scripts/eda_analysis.py`** if it produces a figure/table —
    the script plots the returned data and writes to `output/`.
-5. **Update the manuscript** — describe the step in `manuscript/02_methodology.md`
+5. **Update the manuscript** — describe the step in `docs/manuscript/02_methodology.md`
    using concrete paths (e.g. `src/eda/correlation.py::strongest_pairs()`).

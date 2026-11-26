@@ -4,33 +4,11 @@
 > point is to make every decision explicit: what's required vs aesthetic, what's
 > enforced vs convention, and what you'll hit friction on.
 
-## TL;DR
+## Start a fork
 
-```bash
-# 0. From the repo root, install deps once
-uv sync
-
-# 1. Clean-copy the exemplar to your new project name
-uv run python scripts/audit/copy_exemplar.py \
-  --source templates/template_eda_notebook \
-  --dest projects/working/my_eda_project \
-  --new-name my_eda_project
-
-# 2. Run the tests against your fork
-uv run pytest projects/working/my_eda_project/tests \
-    --cov=projects/working/my_eda_project/src --cov-fail-under=90 -q
-
-# 3. Run the analysis against your fork
-uv run python projects/working/my_eda_project/scripts/eda_analysis.py
-```
-
-**⚠️ Confidentiality invariant.** In the template monorepo checkout, the repo
-`.gitignore` is configured so that only the public canonical exemplars under
-`projects/templates/` are ever git-tracked. Your fork
-(`projects/working/my_eda_project/`) is local-only and won't be pushed even if
-you `git add -f` it. Read
-[`CLAUDE.md`](https://github.com/docxology/template/blob/main/CLAUDE.md) "CONFIDENTIALITY INVARIANT" for
-the full fence.
+Fork this repository, then register a clean checkout in the [pinned runner](quickstart.md).
+Use a unique working project name and run the same checks and analysis against
+your fork.
 
 ## What you're forking
 
@@ -47,7 +25,7 @@ The full inventory lives in [`AGENTS.md`](AGENTS.md); the short version:
 
 | Class | Examples | Action |
 |---|---|---|
-| REQUIRED — pipeline gate | `src/eda/*.py`, `src/__init__.py`, `data/measurements.csv`, all `tests/test_*.py`, `pyproject.toml`, `manuscript/config.yaml`, `manuscript/*.md`, `manuscript/references.bib`, `manuscript/preamble.md` | Keep them; the 90% coverage gate + LaTeX render depend on them |
+| REQUIRED — pipeline gate | `src/eda/*.py`, `src/__init__.py`, `data/measurements.csv`, all `tests/test_*.py`, `pyproject.toml`, `docs/manuscript/config.yaml`, `docs/manuscript/*.md`, `docs/manuscript/references.bib`, `docs/manuscript/preamble.md` | Keep them; the 90% coverage gate + LaTeX render depend on them |
 | REQUIRED — orchestration | `scripts/eda_analysis.py`, `notebooks/eda_walkthrough.ipynb` | The analysis entry point and the archetype this template demonstrates |
 | AESTHETIC | `docs/*.md`, `*/STYLE.md`, `*/PATTERNS.md`, `*/CONVENTIONS.md`, `*/AGENTS.md`, `*/README.md` | Drift detected only by `scripts/audit/check_template_drift.py`; update them when code changes |
 

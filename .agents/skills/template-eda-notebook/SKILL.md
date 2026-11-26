@@ -47,7 +47,7 @@ uv run python scripts/pipeline/stage_05_copy.py --project templates/template_eda
 
 ## Cross-refs
 
-- Project contract: [`AGENTS.md`](../../../AGENTS.md)
+- Project contract: [`AGENTS.md`](https://github.com/docxology/template/blob/87704feae0a4490ef7dad9c931d268e8c30273c2/AGENTS.md)
 - README: [`README.md`](../../../README.md)
-- TODO: [`TODO.md`](../../../TODO.md)
+- TODO: [`TODO.md`](https://github.com/docxology/template/blob/87704feae0a4490ef7dad9c931d268e8c30273c2/docs/TODO.md)
 - Exemplar roster: [`projects/AGENTS.md`](https://github.com/docxology/template/blob/main/projects/AGENTS.md#permanent-canonical-exemplars)

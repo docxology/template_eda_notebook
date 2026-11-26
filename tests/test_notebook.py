@@ -11,6 +11,8 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
+import sys
 from pathlib import Path
 
 import src as eda_pkg
@@ -54,6 +56,16 @@ class TestNotebookSrcBinding:
         assert names, "expected at least one imported name"
         for name in names:
             assert name in eda_pkg.__all__, f"{name} not exported by src.__all__"
+
+    def test_bootstrap_runs_from_notebook_directory(self):
+        source = _code_sources(_load_notebook())[0]
+        result = subprocess.run(
+            [sys.executable, "-c", source],
+            cwd=_NOTEBOOK.parent,
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0, result.stderr
 
     def test_cells_define_no_business_logic(self):
         nb = _load_notebook()

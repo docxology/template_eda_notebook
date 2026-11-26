@@ -71,7 +71,7 @@ matrix = correlation_matrix(frame)  # tested src function
 
 ## Rule 4: "Show, Not Tell" Documentation
 
-Use explicit, verifiable references in `manuscript/` files.
+Use explicit, verifiable references in `docs/manuscript/` files.
 
 **GOOD**: `src/eda/correlation.py::strongest_pairs()` ranks feature pairs by
 absolute correlation while preserving sign.
@@ -82,8 +82,7 @@ absolute correlation while preserving sign.
 
 ## Rule 5: Determinism Policy
 
-The shipped CSV is a static, committed fixture (no generator script ships in
-this tree); the figure-data preparers have no RNG. Prefer fixed, hand-chosen
+The analysis reads a committed CSV fixture. The separate generator writes a deterministic sibling under `output/data/`. The figure-data preparers have no RNG. Prefer fixed, hand-chosen
 inputs in tests so the expected statistic is exact. If you ever introduce
 randomness, seed it and assert bounds, not exact values.
 
@@ -93,7 +92,7 @@ randomness, seed it and assert bounds, not exact values.
 
 - **[`style_guide.md`](style_guide.md)** governs `src/eda/*.py`, `tests/`, and
   `scripts/`.
-- **[`syntax_guide.md`](syntax_guide.md)** governs `manuscript/*.md`.
+- **[`syntax_guide.md`](syntax_guide.md)** governs `docs/manuscript/*.md`.
 
 Do not apply code-style rules to manuscript prose or vice versa.
 
@@ -106,7 +105,7 @@ run. To change what a generated file contains, change the **generator**:
 
 - To change `output/figures/*.png` or `output/data/summary_statistics.csv` →
   modify `src/eda/` and/or `scripts/eda_analysis.py`, then re-run the script.
-- To change the rendered PDF → modify the `manuscript/*.md` source, then
+- To change the rendered PDF → modify the `docs/manuscript/*.md` source, then
   re-render.
 
 See [`output_conventions.md`](output_conventions.md).

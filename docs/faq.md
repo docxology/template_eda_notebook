@@ -55,7 +55,7 @@ cells.
 1. Add a figure-data preparer to `src/eda/figures.py` (returns a dataclass of
    numbers; no matplotlib) with a test in `tests/test_figures.py`.
 2. Plot it in `scripts/eda_analysis.py` and write the PNG to `output/figures/`.
-3. In `manuscript/03_results.md`, add a Pandoc image line:
+3. In `docs/manuscript/03_results.md`, add a Pandoc image line:
    ```markdown
    ![Caption text.](../output/figures/my_figure.png){#fig:my_label}
    ```
@@ -91,4 +91,4 @@ from the repository root so imports resolve.
 - [`troubleshooting.md`](troubleshooting.md) — symptom-driven recipes.
 - [`output_conventions.md`](output_conventions.md) — output regeneration rules.
 - [`syntax_guide.md`](syntax_guide.md) — Pandoc-crossref syntax.
-- [`../manuscript/AGENTS.md`](../manuscript/AGENTS.md) — figure protocol.
+- [`../manuscript/AGENTS.md`](manuscript/AGENTS.md) — figure protocol.

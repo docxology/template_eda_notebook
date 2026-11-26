@@ -69,6 +69,7 @@ class TestEdaAnalysisScript:
             "fig:height_histogram": "height_histogram.png",
         }
         assert all((registry.parent / record["filename"]).is_file() for record in payload["figures"])
+        assert all(record["metadata"]["alt_text"].strip() for record in payload["figures"])
 
     def test_incomplete_figure_set_cannot_write_registry(self, tmp_path):
         module = _load_script_module()

@@ -1,7 +1,7 @@
 # Output Directory Conventions
 
 The project-relative `output/` directory
-(`projects/templates/template_eda_notebook/output/`) holds all generated
+(`projects/working/template_eda_notebook/output/`) holds all generated
 artifacts from the analysis pipeline. This document describes its structure,
 regeneration process, and version-control policy.
 
@@ -15,7 +15,7 @@ or corrupted, re-run the appropriate step to recreate it.
 - `data/measurements.csv` (the shipped dataset)
 - `src/eda/*.py` (pure data logic)
 - `scripts/eda_analysis.py` (orchestration: plotting + writing)
-- `manuscript/config.yaml` (paper/publication metadata)
+- `docs/manuscript/config.yaml` (paper/publication metadata)
 
 ## Directory Structure
 
@@ -41,25 +41,25 @@ flowchart TB
 
 1. **Clean (optional)**: delete the entire `output/` directory to start fresh.
    ```bash
-   rm -rf projects/templates/template_eda_notebook/output/
+   rm -rf projects/working/template_eda_notebook/output/
    ```
 
 2. **Run the analysis** — generates figures and the summary CSV.
    ```bash
-   uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
+   uv run python projects/working/template_eda_notebook/scripts/eda_analysis.py
    ```
    **Outputs**: `figures/`, `data/summary_statistics.csv`
 
 3. **Render PDF** — converts the manuscript to PDF via Pandoc/LaTeX.
    ```bash
-   uv run python scripts/pipeline/stage_03_render.py --project templates/template_eda_notebook
+   uv run python scripts/pipeline/stage_03_render.py --project working/template_eda_notebook
    ```
    **Outputs**: `pdf/`, `web/`
 
 4. **Copy final deliverables** — copies PDF and figures to the repo-level output
    tree (used by CI).
    ```bash
-   uv run python scripts/pipeline/stage_05_copy.py --project templates/template_eda_notebook
+   uv run python scripts/pipeline/stage_05_copy.py --project working/template_eda_notebook
    ```
 
 ## Version-Control Policy
@@ -83,7 +83,7 @@ flowchart TB
 
 ## See Also
 
-- [`manuscript/AGENTS.md`](../manuscript/AGENTS.md) — Manuscript modification protocol and figure protocol.
+- [`docs/manuscript/AGENTS.md`](manuscript/AGENTS.md) — Manuscript modification protocol and figure protocol.
 - [`rendering_pipeline.md`](rendering_pipeline.md) — Full pipeline description.
 - [`syntax_guide.md`](syntax_guide.md) — Figure references.
 - [`output_inventory.md`](output_inventory.md) — Producer/stage table.

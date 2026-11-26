@@ -54,7 +54,7 @@ The typical analysis order is:
 1. `scripts/eda_analysis.py` — loads and cleans the dataset, then writes
    `output/figures/*.png` and `output/data/summary_statistics.csv`, printing each
    output path for manifest collection.
-2. PDF rendering reads `manuscript/*.md` and `config.yaml` so figure paths and
+2. PDF rendering reads `docs/manuscript/*.md` and `config.yaml` so figure paths and
    prose match the analysis that just completed.
 
 ## Relation to figures
