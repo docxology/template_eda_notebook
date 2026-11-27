@@ -39,26 +39,27 @@ flowchart TB
 
 ## Regeneration Sequence
 
-1. **Clean (optional)**: delete the entire `output/` directory to start fresh.
-   ```bash
-   rm -rf projects/working/template_eda_notebook/output/
-   ```
+Run the commands below from the pinned Template checkout root with the project
+registered as `working/template_eda_notebook`. For a fresh run, use a disposable
+checkout and keep the tracked publication snapshot separately, as described in
+the [quickstart](quickstart.md).
 
-2. **Run the analysis** — generates figures and the summary CSV.
+1. **Run the analysis** — generates figures and the summary CSV.
    ```bash
    uv run python projects/working/template_eda_notebook/scripts/eda_analysis.py
    ```
    **Outputs**: `figures/`, `data/summary_statistics.csv`
 
-3. **Render PDF** — converts the manuscript to PDF via Pandoc/LaTeX.
+2. **Render PDF** — converts the manuscript to PDF via Pandoc/LaTeX.
    ```bash
    uv run python scripts/pipeline/stage_03_render.py --project working/template_eda_notebook
    ```
    **Outputs**: `pdf/`, `web/`
 
-4. **Copy final deliverables** — copies PDF and figures to the repo-level output
-   tree (used by CI).
+3. **Validate and copy final deliverables** — writes the copy under
+   `output/working/template_eda_notebook/` in the Template checkout.
    ```bash
+   uv run python scripts/pipeline/stage_04_validate.py --project working/template_eda_notebook
    uv run python scripts/pipeline/stage_05_copy.py --project working/template_eda_notebook
    ```
 
