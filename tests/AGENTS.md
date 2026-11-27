@@ -45,18 +45,7 @@ Live test count: [`docs/_generated/COUNTS.md`](https://github.com/docxology/temp
 
 ## Running the suite
 
-```bash
-# Canonical enforced gate (from project directory)
-cd projects/templates/template_eda_notebook
-uv run pytest tests/ --cov=src --cov-fail-under=90
-
-# From repo root (CI parity)
-uv run pytest projects/templates/template_eda_notebook/tests \
-  --cov=projects/templates/template_eda_notebook/src --cov-fail-under=90
-
-# A single class
-uv run pytest projects/templates/template_eda_notebook/tests -k "TestCorrelationMatrix"
-```
+Run the [pinned verification command](../docs/quickstart.md#register-the-checkout-and-run-the-tests) from the runner checkout. It selects this project's tests and applies its 90% coverage floor.
 
 ## Test class inventory
 

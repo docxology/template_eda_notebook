@@ -79,14 +79,7 @@ hist = histogram_data(clean, "height_cm", bins=10)  # bin counts + edges only
 
 ## Testing
 
-```bash
-# From the monorepo root
-uv run pytest projects/templates/template_eda_notebook/tests \
-    --cov=projects/templates/template_eda_notebook/src --cov-fail-under=90
-
-# Single class
-uv run pytest projects/templates/template_eda_notebook/tests -k "TestCorrelationMatrix"
-```
+Use the [pinned test setup](../docs/quickstart.md#register-the-checkout-and-run-the-tests). Add `-k TestCorrelationMatrix` to isolate the correlation tests.
 
 ## API Reference
 

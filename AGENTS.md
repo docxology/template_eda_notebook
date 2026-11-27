@@ -58,32 +58,12 @@ project root.
   `output/`, writes a fail-closed `output/figures/figure_registry.json`, and
   prints output paths for manifest collection.
 
-## Run via the template monorepo
+## Standalone analysis and tests
 
-```bash
-# From the repository root — run the analysis pipeline (thin orchestrator)
-uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
-# Writes output/figures/*.png, output/figures/figure_registry.json,
-# and output/data/summary_statistics.csv
-
-# Open the walkthrough notebook (calls the same tested src functions)
-#   notebooks/eda_walkthrough.ipynb
-```
-
-## Testing
-
-```bash
-# Run project tests with the 90% coverage gate (configuration source of truth: pyproject.toml)
-uv run pytest projects/templates/template_eda_notebook/tests \
-    --cov=projects/templates/template_eda_notebook/src --cov-fail-under=90
-
-# Single class
-uv run pytest projects/templates/template_eda_notebook/tests -k "TestCorrelationMatrix"
-```
-
-Live test count and achieved coverage:
-[`docs/_generated/COUNTS.md`](https://github.com/docxology/template/blob/main/docs/_generated/COUNTS.md) — do not copy
-the numbers here.
+Use the [quick start](docs/quickstart.md) to register this checkout with the
+pinned Template runner. The runner executes the registered project's
+`scripts/eda_analysis.py` and tests. To focus on the correlation tests, add
+`-k TestCorrelationMatrix` to the documented pytest command.
 
 ## Advisory research overlays (validation inputs, not autonomous agents)
 

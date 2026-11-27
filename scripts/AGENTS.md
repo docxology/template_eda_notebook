@@ -36,10 +36,7 @@ flowchart LR
 
 ## Usage
 
-```bash
-# From the project root
-uv run python projects/templates/template_eda_notebook/scripts/eda_analysis.py
-```
+Run the analysis script for the registered project using the [quick start](../docs/quickstart.md).
 
 This script:
 

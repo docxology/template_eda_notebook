@@ -28,10 +28,7 @@ print(correlation_matrix(clean))
 
 ## Run Tests
 
-```bash
-cd projects/templates/template_eda_notebook
-uv run pytest tests/ --cov=src --cov-fail-under=90
-```
+Run the tests from the pinned runner after [registering this checkout](../docs/quickstart.md#register-the-checkout-and-run-the-tests).
 
 ## Architecture
 

@@ -153,5 +153,5 @@ See [AGENTS.md](AGENTS.md) for technical documentation and
 - Forward backlog: [`TODO.md`](docs/TODO.md).
 - Standalone fork guide: [`STANDALONE.md`](STANDALONE.md).
 - Copy-and-customize config: [`docs/manuscript/config.yaml.example`](docs/manuscript/config.yaml.example).
-- Project validation: `uv run pytest projects/templates/template_eda_notebook/tests --cov=projects/templates/template_eda_notebook/src --cov-fail-under=90`.
+- Project validation: use the test and coverage command in the [pinned quick start](docs/quickstart.md#register-the-checkout-and-run-the-tests).
 - Repo drift validation: `uv run python scripts/audit/check_template_drift.py --strict`.
