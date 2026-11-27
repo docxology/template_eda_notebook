@@ -20,7 +20,7 @@ operational rulebook for AI agents and developers working inside the
 | `quickstart.md` | 5-minute first-run walkthrough |
 | `output_conventions.md` | `output/` layout and regeneration |
 | `output_inventory.md` | Producer/stage graph for pipeline artifacts |
-| `forking_guide.md` | Fork workflow and drift checker |
+| `forking_guide.md` | Fork workflow and standalone verification |
 | `rendering_pipeline.md` | Manuscript → PDF flow; config.yaml controls |
 | `style_guide.md` | Code-style rules for the EDA library |
 | `syntax_guide.md` | Markdown links, citation syntax, figure label registry |
