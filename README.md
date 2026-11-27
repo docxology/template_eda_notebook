@@ -154,4 +154,6 @@ See [AGENTS.md](AGENTS.md) for technical documentation and
 - Standalone fork guide: [`STANDALONE.md`](STANDALONE.md).
 - Copy-and-customize config: [`docs/manuscript/config.yaml.example`](docs/manuscript/config.yaml.example).
 - Project validation: use the test and coverage command in the [pinned quick start](docs/quickstart.md#register-the-checkout-and-run-the-tests).
-- Repo drift validation: `uv run python scripts/audit/check_template_drift.py --strict`.
+- To audit Template's bundled copy in `projects/templates/template_eda_notebook`,
+  run `uv run --no-sync python scripts/audit/check_template_drift.py --project templates/template_eda_notebook --strict`
+  from the pinned Template checkout prepared in the quick start above.
