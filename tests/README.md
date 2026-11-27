@@ -5,11 +5,7 @@ walkthrough notebook. Enforces a strict Zero-Mock policy against real data.
 
 ## Quick Start
 
-```bash
-cd projects/templates/template_eda_notebook
-uv run pytest tests/ -v
-uv run pytest tests/ --cov=src --cov-fail-under=90
-```
+See the [pinned test setup](../docs/quickstart.md#register-the-checkout-and-run-the-tests) for the standalone coverage command.
 
 ## Key Features
 
