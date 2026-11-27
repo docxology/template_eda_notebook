@@ -68,7 +68,7 @@ figure-data preparer in `src/eda/figures.py`:
    ```bash
    uv run python projects/working/template_eda_notebook/scripts/eda_analysis.py
    ```
-4. **Render PDF** from the repository root:
+4. **Render PDF** from the pinned Template checkout root:
    ```bash
    uv run python scripts/pipeline/stage_03_render.py --project working/template_eda_notebook
    ```

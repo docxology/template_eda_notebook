@@ -6,7 +6,8 @@ produced by a tested function and a thin script, never transcribed by hand.
 
 ## How to regenerate everything
 
-From the repository root:
+Run the commands from the pinned Template checkout root after registering
+the notebook repository as `projects/working/template_eda_notebook`.
 
 ```bash
 # 1. Run the analysis (writes figures + summary CSV, prints output paths)
